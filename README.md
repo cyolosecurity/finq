@@ -1,19 +1,19 @@
 # finq
 
-this is a monitoring tool for go's finalizer go routine.
-it's running in the function `runfinq` under package `runtime` in go's source code.
+This is a monitoring tool for go's finalizer go routine.
+The routine is spawned by the function `runfinq` under the `runtime` package in go's source code (mfinal.go).
 
-## why to use
+## Why to use
 
-there is a single go routine that is responsible for executing all finalizers.
-if a finalizer function is blocking, it will block the entire finalizer go routine.
-this would deny cleaning up resources and memory, and it will cause a memory leak.
+The Go runtime uses a single goroutine for all finalizer execution.
+A slow-running finalizer can cause a significant delay in the execution of subsequent finalizers.
+Furthermore, a blocking finalizer halts the finalizer goroutine, preventing the cleanup of resources for other objects awaiting finalization, which results in a memory leak.
 
-## how to use
+## Usage
 
 ```golang
 go finq.Monitor(ctx, &MonitorOpts{
-    StallingInterval: time.Millisecond,
+    StallingInterval: time.Minute,
     OnComplete: func(d time.Duration) {
         log.Printf("finalizer executed after %v", d)
     },
@@ -24,7 +24,7 @@ go finq.Monitor(ctx, &MonitorOpts{
 })
 ```
 
-## references
+## References
 
 https://groups.google.com/g/golang-nuts/c/uL68-fxg2K4
 
@@ -34,3 +34,4 @@ https://github.com/golang/go/issues/72949
 
 https://github.com/golang/go/issues/72950
 
+https://github.com/golang/go/issues/73011
