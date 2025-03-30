@@ -14,11 +14,17 @@ Furthermore, a blocking finalizer halts the finalizer goroutine, preventing the 
 ```golang
 go finq.Monitor(ctx, &MonitorOpts{
     StallingInterval: time.Minute,
-    OnComplete: func(d time.Duration) {
-        log.Printf("finalizer executed after %v", d)
-    },
     OnStalling: func(d time.Duration) {
-        log.Printf("waiting for finalizer to execute for %v", d)
+        log.Println("waiting for finalizer to execute for:", d)
+
+        // you can use this functionality to retrieve the stacktrace of the blocking routine
+        trace := finq.GetFinalizerStackTrace()
+        if trace != "" {
+            log.Println("blocking routine trace:", trace)
+        }
+    },
+    OnComplete: func(d time.Duration) {
+        log.Println("finalizer executed after:", d)
     },
     ImmediatelyTriggerGC: false,
 })
