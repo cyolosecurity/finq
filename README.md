@@ -26,12 +26,10 @@ go finq.Monitor(ctx, &MonitorOpts{
 
 ## References
 
-https://groups.google.com/g/golang-nuts/c/uL68-fxg2K4
+Discussion: https://groups.google.com/g/golang-nuts/c/uL68-fxg2K4
 
-https://github.com/golang/go/issues/72948
-
-https://github.com/golang/go/issues/72949
-
-https://github.com/golang/go/issues/72950
-
-https://github.com/golang/go/issues/73011
+Related Issues
+* https://github.com/golang/go/issues/72948
+* https://github.com/golang/go/issues/72949
+* https://github.com/golang/go/issues/72950
+* https://github.com/golang/go/issues/73011
