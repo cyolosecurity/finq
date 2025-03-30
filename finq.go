@@ -81,23 +81,11 @@ func checkFinalizerOnce(ctx context.Context, opts *MonitorOpts) {
 
 // createAndDeleteObjectWithFinalizer creates an object with a finalizer that will execute the finalizerFunc.
 func createAndDeleteObjectWithFinalizer(finalizerFunc func()) {
-	// runtime/mfinal.go:
-	// "
-	// Note that because finalizers may execute arbitrarily far into the future
-	// after an object is no longer referenced, the runtime is allowed to perform
-	// a space-saving optimization that batches objects together in a single
-	// allocation slot. The finalizer for an unreferenced object in such an
-	// allocation may never run if it always exists in the same batch as a
-	// referenced object. Typically, this batching only happens for tiny
-	// (on the order of 16 bytes or less) and pointer-free objects.
-	// "
-	const objSize = 32
-
 	// create a dummy object
-	x := new([objSize]byte)
+	x := new(*int)
 
 	// set a finalizer to cancel the context
-	runtime.SetFinalizer(x, func(_ *[objSize]byte) {
+	runtime.SetFinalizer(x, func(_ **int) {
 		finalizerFunc()
 	})
 
