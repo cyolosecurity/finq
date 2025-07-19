@@ -31,7 +31,7 @@ go finq.Monitor(ctx, &MonitorOpts{
 ```
 
 ## References
-Blogpost: [Leak and Seek: A Go Runtime Mystery](https://cyolo.io/blog/leak-and-seek-a-go-runtime-mystery)
+Blogpost: [Leak and Seek: A Go Runtime Mystery](https://cyolo.io/blog/leak-and-seek-a-go-runtime-mystery) ([Medium](https://medium.com/itnext/leak-and-seek-a-go-runtime-mystery-a3ac0676f0a9))
 
 Discussion: [golang-nuts](https://groups.google.com/g/golang-nuts/c/uL68-fxg2K4)
 
